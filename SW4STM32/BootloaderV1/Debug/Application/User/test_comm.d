@@ -1,6 +1,5 @@
 Application/User/test_comm.o: ../Application/User/test_comm.c \
- ../Application/User/test_comm.h \
- H:/Documents/New\ Folder/BootloaderV1/Inc/usart.h \
+ H:/Documents/New\ Folder/BootloaderV1/SW4STM32/BootloaderV1/Application/User/bootloaderhw.h \
  H:/Documents/New\ Folder/BootloaderV1/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h \
  H:/Documents/New\ Folder/BootloaderV1/Inc/stm32f1xx_hal_conf.h \
  H:/Documents/New\ Folder/BootloaderV1/Inc/main.h \
@@ -30,12 +29,11 @@ Application/User/test_comm.o: ../Application/User/test_comm.c \
  H:/Documents/New\ Folder/BootloaderV1/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h \
  H:/Documents/New\ Folder/BootloaderV1/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h \
  H:/Documents/New\ Folder/BootloaderV1/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h \
- ../Application/User/com_interface.h ../Application/User/bootloaderHW.h \
- ../Application/User/bootlib.h ../Application/User/Bootloader_Settings.h
+ H:/Documents/New\ Folder/BootloaderV1/SW4STM32/BootloaderV1/Application/User/com_interface.h \
+ H:/Documents/New\ Folder/BootloaderV1/Inc/usart.h \
+ ../Application/User/test_comm.h
 
-../Application/User/test_comm.h:
-
-H:/Documents/New\ Folder/BootloaderV1/Inc/usart.h:
+H:/Documents/New\ Folder/BootloaderV1/SW4STM32/BootloaderV1/Application/User/bootloaderhw.h:
 
 H:/Documents/New\ Folder/BootloaderV1/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h:
 
@@ -95,10 +93,8 @@ H:/Documents/New\ Folder/BootloaderV1/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx
 
 H:/Documents/New\ Folder/BootloaderV1/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h:
 
-../Application/User/com_interface.h:
+H:/Documents/New\ Folder/BootloaderV1/SW4STM32/BootloaderV1/Application/User/com_interface.h:
 
-../Application/User/bootloaderHW.h:
+H:/Documents/New\ Folder/BootloaderV1/Inc/usart.h:
 
-../Application/User/bootlib.h:
-
-../Application/User/Bootloader_Settings.h:
+../Application/User/test_comm.h:

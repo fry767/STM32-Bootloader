@@ -67,6 +67,7 @@ void Error_Handler(void);
 int __io_putchar(int ch)
 {
 	ITM_SendChar(ch);
+	//HAL_UART_Transmit(&huart1,(uint8_t*)&ch,1,10000);
 	return ch;
 }
 int _write(int file, char *ptr, int len)
