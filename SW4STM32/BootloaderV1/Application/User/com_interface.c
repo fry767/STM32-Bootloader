@@ -24,3 +24,4 @@ void Send_Char(char* ch,uint8_t size)
 {
 	HAL_UART_Transmit(&huart1,ch,size,10000);
 }
+

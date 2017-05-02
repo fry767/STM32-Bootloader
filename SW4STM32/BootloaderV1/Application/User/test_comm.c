@@ -120,7 +120,6 @@ uint8_t test_WriteReceivedDataInFlash(void)
 	uint32_t Value_Read_In_Flash = 0;
 	uint8_t Received_Value = 0;
 
-	Address = START_FLASH_ADDRESS;
 	if(!Bootloader_Init())
 	{
 		char ch[] = "test_WriteReceivedDataInFlash Failed\n\r";
@@ -138,7 +137,7 @@ uint8_t test_WriteReceivedDataInFlash(void)
 		Send_Char(ch,sizeof(ch));
 		return 0;
 	}
-	Value_Read_In_Flash = Bootloader_WriteStorage8(Received_Value,&Address);
+	Value_Read_In_Flash = Bootloader_WriteStorage8(Received_Value);
 	if(Value_Read_In_Flash != Received_Value)
 	{
 		char ch[] = "test_WriteReceivedDataInFlash PASS\n\r";
