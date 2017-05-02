@@ -9,6 +9,7 @@
 static uint16_t boot_pages;
 static uint16_t app_pages;
 static uint16_t storage_pages;
+
 static void init_test(void)
 {
 	uint16_t boot_app_store_pages[3] = {0,0,0};
@@ -203,6 +204,7 @@ static uint8_t test_EraseApp(void)
 		return 0;
 	}
 }
+
 void runAllTest(void)
 {
 	uint8_t test_status[20] = {0};

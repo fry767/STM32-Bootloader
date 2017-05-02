@@ -8,6 +8,8 @@
 
 static uint32_t storage_address[2] ;
 static uint32_t app_address[2];
+static uint32_t Current_Address;
+
 static uint32_t Bootloader_Read(uint32_t Address)
 {
 	if(!IS_FLASH_PROGRAM_ADDRESS(Address))
@@ -116,6 +118,8 @@ uint8_t Bootloader_Init(void)
 
 	Bootloader_CalculateSectorForStorage(flash_size_data,&storage_address);
 	Bootloader_CalculateSectorForApp(flash_size_data,&app_address);
+
+	Current_Address = storage_address[0];
 
 	if(!Bootloader_EraseStorage())
 		return 0;
