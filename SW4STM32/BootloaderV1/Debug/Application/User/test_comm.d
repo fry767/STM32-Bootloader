@@ -21,6 +21,7 @@ Application/User/test_comm.o: ../Application/User/test_comm.c \
  H:/Documents/New\ Folder/BootloaderV1/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_can.h \
  H:/Documents/New\ Folder/BootloaderV1/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_can_ex.h \
  H:/Documents/New\ Folder/BootloaderV1/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_cortex.h \
+ H:/Documents/New\ Folder/BootloaderV1/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_crc.h \
  H:/Documents/New\ Folder/BootloaderV1/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash.h \
  H:/Documents/New\ Folder/BootloaderV1/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h \
  H:/Documents/New\ Folder/BootloaderV1/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_i2c.h \
@@ -31,7 +32,7 @@ Application/User/test_comm.o: ../Application/User/test_comm.c \
  H:/Documents/New\ Folder/BootloaderV1/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h \
  H:/Documents/New\ Folder/BootloaderV1/SW4STM32/BootloaderV1/Application/User/com_interface.h \
  H:/Documents/New\ Folder/BootloaderV1/Inc/usart.h \
- ../Application/User/test_comm.h
+ ../Application/User/test_comm.h ../Application/User/protocole.h
 
 H:/Documents/New\ Folder/BootloaderV1/SW4STM32/BootloaderV1/Application/User/bootloaderhw.h:
 
@@ -77,6 +78,8 @@ H:/Documents/New\ Folder/BootloaderV1/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx
 
 H:/Documents/New\ Folder/BootloaderV1/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_cortex.h:
 
+H:/Documents/New\ Folder/BootloaderV1/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_crc.h:
+
 H:/Documents/New\ Folder/BootloaderV1/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash.h:
 
 H:/Documents/New\ Folder/BootloaderV1/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h:
@@ -98,3 +101,5 @@ H:/Documents/New\ Folder/BootloaderV1/SW4STM32/BootloaderV1/Application/User/com
 H:/Documents/New\ Folder/BootloaderV1/Inc/usart.h:
 
 ../Application/User/test_comm.h:
+
+../Application/User/protocole.h:

@@ -21,6 +21,7 @@ Application/User/main.o: H:/Documents/New\ Folder/BootloaderV1/Src/main.c \
  H:/Documents/New\ Folder/BootloaderV1/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_can.h \
  H:/Documents/New\ Folder/BootloaderV1/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_can_ex.h \
  H:/Documents/New\ Folder/BootloaderV1/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_cortex.h \
+ H:/Documents/New\ Folder/BootloaderV1/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_crc.h \
  H:/Documents/New\ Folder/BootloaderV1/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash.h \
  H:/Documents/New\ Folder/BootloaderV1/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h \
  H:/Documents/New\ Folder/BootloaderV1/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_i2c.h \
@@ -30,6 +31,7 @@ Application/User/main.o: H:/Documents/New\ Folder/BootloaderV1/Src/main.c \
  H:/Documents/New\ Folder/BootloaderV1/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h \
  H:/Documents/New\ Folder/BootloaderV1/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h \
  H:/Documents/New\ Folder/BootloaderV1/Inc/can.h \
+ H:/Documents/New\ Folder/BootloaderV1/Inc/crc.h \
  H:/Documents/New\ Folder/BootloaderV1/Inc/dma.h \
  H:/Documents/New\ Folder/BootloaderV1/Inc/i2c.h \
  H:/Documents/New\ Folder/BootloaderV1/Inc/spi.h \
@@ -84,6 +86,8 @@ H:/Documents/New\ Folder/BootloaderV1/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx
 
 H:/Documents/New\ Folder/BootloaderV1/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_cortex.h:
 
+H:/Documents/New\ Folder/BootloaderV1/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_crc.h:
+
 H:/Documents/New\ Folder/BootloaderV1/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash.h:
 
 H:/Documents/New\ Folder/BootloaderV1/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h:
@@ -101,6 +105,8 @@ H:/Documents/New\ Folder/BootloaderV1/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx
 H:/Documents/New\ Folder/BootloaderV1/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h:
 
 H:/Documents/New\ Folder/BootloaderV1/Inc/can.h:
+
+H:/Documents/New\ Folder/BootloaderV1/Inc/crc.h:
 
 H:/Documents/New\ Folder/BootloaderV1/Inc/dma.h:
 

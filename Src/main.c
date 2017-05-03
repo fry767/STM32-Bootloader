@@ -34,6 +34,7 @@
 #include "main.h"
 #include "stm32f1xx_hal.h"
 #include "can.h"
+#include "crc.h"
 #include "dma.h"
 #include "i2c.h"
 #include "spi.h"
@@ -103,9 +104,10 @@ int main(void)
   MX_I2C1_Init();
   MX_SPI2_Init();
   MX_USART1_UART_Init();
- /* MX_TIM1_Init();
+  MX_TIM1_Init();
   MX_TIM2_Init();
-  MX_TIM3_Init();*/
+  MX_TIM3_Init();
+  MX_CRC_Init();
 
   /* USER CODE BEGIN 2 */
 

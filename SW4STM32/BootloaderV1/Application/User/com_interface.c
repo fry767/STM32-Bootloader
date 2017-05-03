@@ -56,3 +56,7 @@ uint8_t Comm_USART_Wait_For_Key(char* key)
 	Receive_Char_In_IT_Mode(&value,1);
 	return IS_KEY_RECEIVED(value,*key);
 }
+uint8_t Comm_USART_Poll_For_Key(char* key)
+{
+
+}

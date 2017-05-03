@@ -8,10 +8,12 @@ C_SRCS += \
 ../Application/User/bootloaderhw.c \
 H:/Documents/New\ Folder/BootloaderV1/Src/can.c \
 ../Application/User/com_interface.c \
+H:/Documents/New\ Folder/BootloaderV1/Src/crc.c \
 H:/Documents/New\ Folder/BootloaderV1/Src/dma.c \
 H:/Documents/New\ Folder/BootloaderV1/Src/gpio.c \
 H:/Documents/New\ Folder/BootloaderV1/Src/i2c.c \
 H:/Documents/New\ Folder/BootloaderV1/Src/main.c \
+../Application/User/protocole.c \
 H:/Documents/New\ Folder/BootloaderV1/Src/spi.c \
 H:/Documents/New\ Folder/BootloaderV1/Src/stm32f1xx_hal_msp.c \
 H:/Documents/New\ Folder/BootloaderV1/Src/stm32f1xx_it.c \
@@ -25,10 +27,12 @@ OBJS += \
 ./Application/User/bootloaderhw.o \
 ./Application/User/can.o \
 ./Application/User/com_interface.o \
+./Application/User/crc.o \
 ./Application/User/dma.o \
 ./Application/User/gpio.o \
 ./Application/User/i2c.o \
 ./Application/User/main.o \
+./Application/User/protocole.o \
 ./Application/User/spi.o \
 ./Application/User/stm32f1xx_hal_msp.o \
 ./Application/User/stm32f1xx_it.o \
@@ -42,10 +46,12 @@ C_DEPS += \
 ./Application/User/bootloaderhw.d \
 ./Application/User/can.d \
 ./Application/User/com_interface.d \
+./Application/User/crc.d \
 ./Application/User/dma.d \
 ./Application/User/gpio.d \
 ./Application/User/i2c.d \
 ./Application/User/main.d \
+./Application/User/protocole.d \
 ./Application/User/spi.d \
 ./Application/User/stm32f1xx_hal_msp.d \
 ./Application/User/stm32f1xx_it.d \
@@ -69,6 +75,14 @@ Application/User/can.o: H:/Documents/New\ Folder/BootloaderV1/Src/can.c
 	@echo 'Invoking: MCU GCC Compiler'
 	@echo %cd%
 	arm-none-eabi-gcc -mcpu=cortex-m3 -mthumb -mfloat-abi=soft '-D__weak=__attribute__((weak))' '-D__packed=__attribute__((__packed__))' -DUSE_HAL_DRIVER -DSTM32F103xB -I"H:/Documents/New Folder/BootloaderV1/Inc" -I"H:/Documents/New Folder/BootloaderV1/SW4STM32/BootloaderV1/Application/User" -I"H:/Documents/New Folder/BootloaderV1/Drivers/STM32F1xx_HAL_Driver/Inc" -I"H:/Documents/New Folder/BootloaderV1/Drivers/STM32F1xx_HAL_Driver/Inc/Legacy" -I"H:/Documents/New Folder/BootloaderV1/Drivers/CMSIS/Device/ST/STM32F1xx/Include" -I"H:/Documents/New Folder/BootloaderV1/Drivers/CMSIS/Include" -I"H:/Documents/New Folder/BootloaderV1/Inc"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Application/User/can.d" -MT"$@" -o "$@" "$<"
+	@echo 'Finished building: $<'
+	@echo ' '
+
+Application/User/crc.o: H:/Documents/New\ Folder/BootloaderV1/Src/crc.c
+	@echo 'Building file: $<'
+	@echo 'Invoking: MCU GCC Compiler'
+	@echo %cd%
+	arm-none-eabi-gcc -mcpu=cortex-m3 -mthumb -mfloat-abi=soft '-D__weak=__attribute__((weak))' '-D__packed=__attribute__((__packed__))' -DUSE_HAL_DRIVER -DSTM32F103xB -I"H:/Documents/New Folder/BootloaderV1/Inc" -I"H:/Documents/New Folder/BootloaderV1/SW4STM32/BootloaderV1/Application/User" -I"H:/Documents/New Folder/BootloaderV1/Drivers/STM32F1xx_HAL_Driver/Inc" -I"H:/Documents/New Folder/BootloaderV1/Drivers/STM32F1xx_HAL_Driver/Inc/Legacy" -I"H:/Documents/New Folder/BootloaderV1/Drivers/CMSIS/Device/ST/STM32F1xx/Include" -I"H:/Documents/New Folder/BootloaderV1/Drivers/CMSIS/Include" -I"H:/Documents/New Folder/BootloaderV1/Inc"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Application/User/crc.d" -MT"$@" -o "$@" "$<"
 	@echo 'Finished building: $<'
 	@echo ' '
 

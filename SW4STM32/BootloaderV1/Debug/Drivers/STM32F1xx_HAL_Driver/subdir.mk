@@ -7,6 +7,7 @@ C_SRCS += \
 H:/Documents/New\ Folder/BootloaderV1/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.c \
 H:/Documents/New\ Folder/BootloaderV1/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_can.c \
 H:/Documents/New\ Folder/BootloaderV1/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.c \
+H:/Documents/New\ Folder/BootloaderV1/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_crc.c \
 H:/Documents/New\ Folder/BootloaderV1/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_dma.c \
 H:/Documents/New\ Folder/BootloaderV1/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_flash.c \
 H:/Documents/New\ Folder/BootloaderV1/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_flash_ex.c \
@@ -26,6 +27,7 @@ OBJS += \
 ./Drivers/STM32F1xx_HAL_Driver/stm32f1xx_hal.o \
 ./Drivers/STM32F1xx_HAL_Driver/stm32f1xx_hal_can.o \
 ./Drivers/STM32F1xx_HAL_Driver/stm32f1xx_hal_cortex.o \
+./Drivers/STM32F1xx_HAL_Driver/stm32f1xx_hal_crc.o \
 ./Drivers/STM32F1xx_HAL_Driver/stm32f1xx_hal_dma.o \
 ./Drivers/STM32F1xx_HAL_Driver/stm32f1xx_hal_flash.o \
 ./Drivers/STM32F1xx_HAL_Driver/stm32f1xx_hal_flash_ex.o \
@@ -45,6 +47,7 @@ C_DEPS += \
 ./Drivers/STM32F1xx_HAL_Driver/stm32f1xx_hal.d \
 ./Drivers/STM32F1xx_HAL_Driver/stm32f1xx_hal_can.d \
 ./Drivers/STM32F1xx_HAL_Driver/stm32f1xx_hal_cortex.d \
+./Drivers/STM32F1xx_HAL_Driver/stm32f1xx_hal_crc.d \
 ./Drivers/STM32F1xx_HAL_Driver/stm32f1xx_hal_dma.d \
 ./Drivers/STM32F1xx_HAL_Driver/stm32f1xx_hal_flash.d \
 ./Drivers/STM32F1xx_HAL_Driver/stm32f1xx_hal_flash_ex.d \
@@ -83,6 +86,14 @@ Drivers/STM32F1xx_HAL_Driver/stm32f1xx_hal_cortex.o: H:/Documents/New\ Folder/Bo
 	@echo 'Invoking: MCU GCC Compiler'
 	@echo %cd%
 	arm-none-eabi-gcc -mcpu=cortex-m3 -mthumb -mfloat-abi=soft '-D__weak=__attribute__((weak))' '-D__packed=__attribute__((__packed__))' -DUSE_HAL_DRIVER -DSTM32F103xB -I"H:/Documents/New Folder/BootloaderV1/Inc" -I"H:/Documents/New Folder/BootloaderV1/SW4STM32/BootloaderV1/Application/User" -I"H:/Documents/New Folder/BootloaderV1/Drivers/STM32F1xx_HAL_Driver/Inc" -I"H:/Documents/New Folder/BootloaderV1/Drivers/STM32F1xx_HAL_Driver/Inc/Legacy" -I"H:/Documents/New Folder/BootloaderV1/Drivers/CMSIS/Device/ST/STM32F1xx/Include" -I"H:/Documents/New Folder/BootloaderV1/Drivers/CMSIS/Include" -I"H:/Documents/New Folder/BootloaderV1/Inc"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Drivers/STM32F1xx_HAL_Driver/stm32f1xx_hal_cortex.d" -MT"$@" -o "$@" "$<"
+	@echo 'Finished building: $<'
+	@echo ' '
+
+Drivers/STM32F1xx_HAL_Driver/stm32f1xx_hal_crc.o: H:/Documents/New\ Folder/BootloaderV1/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_crc.c
+	@echo 'Building file: $<'
+	@echo 'Invoking: MCU GCC Compiler'
+	@echo %cd%
+	arm-none-eabi-gcc -mcpu=cortex-m3 -mthumb -mfloat-abi=soft '-D__weak=__attribute__((weak))' '-D__packed=__attribute__((__packed__))' -DUSE_HAL_DRIVER -DSTM32F103xB -I"H:/Documents/New Folder/BootloaderV1/Inc" -I"H:/Documents/New Folder/BootloaderV1/SW4STM32/BootloaderV1/Application/User" -I"H:/Documents/New Folder/BootloaderV1/Drivers/STM32F1xx_HAL_Driver/Inc" -I"H:/Documents/New Folder/BootloaderV1/Drivers/STM32F1xx_HAL_Driver/Inc/Legacy" -I"H:/Documents/New Folder/BootloaderV1/Drivers/CMSIS/Device/ST/STM32F1xx/Include" -I"H:/Documents/New Folder/BootloaderV1/Drivers/CMSIS/Include" -I"H:/Documents/New Folder/BootloaderV1/Inc"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Drivers/STM32F1xx_HAL_Driver/stm32f1xx_hal_crc.d" -MT"$@" -o "$@" "$<"
 	@echo 'Finished building: $<'
 	@echo ' '
 

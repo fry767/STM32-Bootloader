@@ -6,6 +6,7 @@
 #include <sys/_stdint.h>
 #include <usart.h>
 #include "test_comm.h"
+#include "protocole.h"
 
 #define TIMEOUT_VALUE	10000 /* 1ms counter (Systick)*/
 
@@ -185,7 +186,69 @@ uint8_t test_WriteLargerThanAvailableFiles(void)
 
 
 }
+uint8_t test_CommunicationParameterInit(void)
+{
+	Comm_Parameter_Struct testComParam;
+	testComParam.BootKey = "";
+	testComParam.FirmwareLength = 0xFFFFFFFF;
+	testComParam.PacketCRC = 0x12345678;
+	Comm_ParameterInitialise(&testComParam,"MDKEY");
+	if(testComParam.FirmwareLength == 0 && testComParam.PacketCRC == 0)
+	{
+		char ch[] = "test_CommunicationParameterInit Pass\n\r";
+		Send_Char(ch,sizeof(ch));
+		return 1;
+	}
+	else
+	{
+		char ch[] = "test_CommunicationParameterInit Failed\n\r";
+		Send_Char(ch,sizeof(ch));
+		return 0;
+	}
 
+}
+
+uint8_t test_CommunicationPollForFirmware(void)
+{
+	Comm_Parameter_Struct testComParam;
+	Comm_ParameterInitialise(&testComParam,"MDKEY");
+
+	if(Comm_Poll_For_Firmware())
+	{
+		char ch[] = "test_CommPollForFirmware Pass\n\r";
+		Send_Char(ch,sizeof(ch));
+		return 1;
+	}
+	else
+	{
+		char ch[] = "test_CommPollForFirmware Failed\n\r";
+		Send_Char(ch,sizeof(ch));
+		return 0;
+	}
+
+}
+uint8_t test_CommunicationSecurityCalculation(void)
+{
+	Comm_Parameter_Struct testComParam;
+	Comm_ParameterInitialise(&testComParam,"MDKEY");
+
+	char Message_to_encrypt[] = "ALLOQWERTY12";
+	CommunicationSecurityAdd(Message_to_encrypt,12);
+	uint8_t ActualCheckSum = CommunicationSecurityCalc();
+
+	if(ActualCheckSum == 0x89)
+	{
+		char ch[] = "test_CommunicationSecurityCalculation Pass\n\r";
+		Send_Char(ch,sizeof(ch));
+		return 1;
+	}
+	else
+	{
+		char ch[] = "test_CommunicationSecurityCalculation Failed\n\r";
+		Send_Char(ch,sizeof(ch));
+		return 0;
+	}
+}
 void runAllCommTest(void)
 {
 	char ch[] = "Starting Com Test\n\r";
@@ -204,4 +267,8 @@ void runAllCommTest(void)
 	test_MultipleWriteReceivedDataInFlash();
 	test_WriteLargerThanAvailableFiles();*/
 
+	/*Protocol Test*/
+	/*test_CommunicationParameterInit();
+	test_CommunicationPollForFirmware();*/
+	test_CommunicationSecurityCalculation();
 }
