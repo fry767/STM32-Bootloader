@@ -141,7 +141,13 @@ uint32_t Bootloader_WriteStorage32(uint32_t value)
 		else
 			return 0;
 }
-
+uint32_t Bootloader_WriteApp32(uint32_t value)
+{
+	if(Bootloader_WriteApp(value))
+			return Bootloader_Read(Current_App_Address-4);
+		else
+			return 0;
+}
 uint8_t Bootloader_CopyStorageInAppspace(void)
 {
 	uint32_t i = 0;
