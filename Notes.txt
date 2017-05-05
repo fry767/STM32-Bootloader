@@ -1,0 +1,4 @@
+Pour l'application, l'utilisateur doit :
+
+- Changer l'origine de la FLASH dans le linker
+- Modifier l'offset de la table des vecteurs OU modifier le define FLASH_BASE (Pas conseiller)

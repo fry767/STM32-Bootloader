@@ -45,12 +45,14 @@
 /* USER CODE BEGIN Includes */
 #include <test_FLASH_HW.h>
 #include "test_comm.h"
+#include "com_interface.h"
 #include "bootloaderhw.h"
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
+
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE END PV */
@@ -65,6 +67,7 @@ void Error_Handler(void);
 /* USER CODE END PFP */
 
 /* USER CODE BEGIN 0 */
+extern unsigned int _Bootloader_Size;
 int __io_putchar(int ch)
 {
 	ITM_SendChar(ch);
@@ -106,6 +109,7 @@ int main(void)
   MX_USART1_UART_Init();
   MX_TIM1_Init();
   MX_TIM2_Init();
+
   MX_TIM3_Init();
   MX_CRC_Init();
 
@@ -122,7 +126,9 @@ int main(void)
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
-
+	  char ch[] = "HELLO FROM APP";
+	  Send_Char(ch,sizeof(ch));
+	  HAL_Delay(500);
   }
   /* USER CODE END 3 */
 
