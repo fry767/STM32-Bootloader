@@ -15,6 +15,9 @@ static uint16_t BootloaderSize;
 static uint16_t ApplicationSize;
 static uint16_t StorageSize;
 static char mode[4];
+
+typedef void (*pFunction)(void);
+pFunction Jump_To_Application;
 void Bootloader_SplitFlash(uint16_t size, uint16_t *splitted_part)
 {
 	uint16_t remaining_size = size - BOOTLOADER_SIZE;
@@ -39,7 +42,18 @@ void Bootloader_CalculateSectorForApp(uint16_t size,uint32_t* app_address)
 	app_address[0] = START_FLASH_ADDRESS + (uint32_t)BootloaderSize*FLASH_PAGE_SIZE;
 	app_address[1] = START_FLASH_ADDRESS + (uint32_t)BootloaderSize*FLASH_PAGE_SIZE + (uint32_t)ApplicationSize*FLASH_PAGE_SIZE;
 }
+void Bootloader_JumpToApplication(void)
+{
+	uint32_t Application_Address = START_FLASH_ADDRESS + (uint32_t)BootloaderSize*FLASH_PAGE_SIZE;
+    uint32_t Program_Counter = Application_Address + 0x04;
+	Jump_To_Application = (pFunction)(*(uint32_t *)(Program_Counter));
 
+	__set_MSP(*(uint32_t*) Application_Address);
+
+	Jump_To_Application();
+
+
+}
 char* Bootloader_Waiting_For_Key(void)
 {	
 	strcpy(mode,"none");
