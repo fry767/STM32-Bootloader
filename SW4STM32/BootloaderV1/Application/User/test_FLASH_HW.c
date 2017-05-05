@@ -217,18 +217,26 @@ static uint8_t test_EraseApp(void)
 		return 0;
 	}
 }
-
+void test_Bootloader_Jump_To_Application(void)
+{
+	//Bootloader_JumpToApplication();
+}
 void runAllTest(void)
 {
 	uint8_t test_status[20] = {0};
 	uint8_t i=0;
 	init_test();
-	test_status[i++] = test_InitBootloader();
+	/*test_status[i++] = test_InitBootloader();
 	test_status[i++] = test_EraseApp();
 	test_status[i++] = test_VerifyDataWrittenInFlash();
 	test_status[i++] = test_Verify32BitWrittenInFlash();
-	/*test_status[i++] = test_UpperBoundWrite();
-	test_status[i++] = test_LesserBoundWrite();*/
 	test_status[i++] = test_VerifyMultipleWriteInFlash();
-	test_status[i++] = test_CopyStorageSpaceInAppSpace();
+	test_status[i++] = test_CopyStorageSpaceInAppSpace();*/
+	test_Bootloader_Jump_To_Application();
+	/* Test Lib Bootlaoder*/
+
+
+
+	/*test_status[i++] = test_UpperBoundWrite();
+		test_status[i++] = test_LesserBoundWrite();*/
 }

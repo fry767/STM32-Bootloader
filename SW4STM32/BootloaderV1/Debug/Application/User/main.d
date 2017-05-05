@@ -40,6 +40,7 @@ Application/User/main.o: H:/Documents/New\ Folder/BootloaderV1/Src/main.c \
  H:/Documents/New\ Folder/BootloaderV1/Inc/gpio.h \
  H:/Documents/New\ Folder/BootloaderV1/SW4STM32/BootloaderV1/Application/User/test_FLASH_HW.h \
  H:/Documents/New\ Folder/BootloaderV1/SW4STM32/BootloaderV1/Application/User/test_comm.h \
+ H:/Documents/New\ Folder/BootloaderV1/SW4STM32/BootloaderV1/Application/User/com_interface.h \
  H:/Documents/New\ Folder/BootloaderV1/SW4STM32/BootloaderV1/Application/User/bootloaderhw.h
 
 H:/Documents/New\ Folder/BootloaderV1/Inc/main.h:
@@ -123,5 +124,7 @@ H:/Documents/New\ Folder/BootloaderV1/Inc/gpio.h:
 H:/Documents/New\ Folder/BootloaderV1/SW4STM32/BootloaderV1/Application/User/test_FLASH_HW.h:
 
 H:/Documents/New\ Folder/BootloaderV1/SW4STM32/BootloaderV1/Application/User/test_comm.h:
+
+H:/Documents/New\ Folder/BootloaderV1/SW4STM32/BootloaderV1/Application/User/com_interface.h:
 
 H:/Documents/New\ Folder/BootloaderV1/SW4STM32/BootloaderV1/Application/User/bootloaderhw.h:

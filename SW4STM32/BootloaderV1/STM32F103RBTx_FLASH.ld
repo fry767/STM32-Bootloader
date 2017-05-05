@@ -57,11 +57,21 @@ _estack = 0x20005000;    /* end of RAM */
 _Min_Heap_Size = 0x200;      /* required amount of heap  */
 _Min_Stack_Size = 0x400; /* required amount of stack */
 
+/* User Variable*/
+BOOTLOADER = 1; 
+_Bootloader_Size = 20K;
+_Bootloader_Flash_Origin = 0x8000000 + _Bootloader_Size;
+FLASH_ADDRESS = DEFINED(BOOTLOADER) ? 0x8000000: (_Bootloader_Flash_Origin) ;
+FLASH_LENGTH = DEFINED(BOOTLOADER) ? 128K: 128K - _Bootloader_Size;
+
+
 /* Specify the memory areas */
+
 MEMORY
 {
 RAM (xrw)      : ORIGIN = 0x20000000, LENGTH = 20K
-FLASH (rx)      : ORIGIN = 0x8000000, LENGTH = 128K
+FLASH (rx)     : ORIGIN = FLASH_ADDRESS, LENGTH = FLASH_LENGTH
+BOOTLOADER(rx) : ORIGIN = 0x8000000, LENGTH = _Bootloader_Size
 }
 
 /* Define output sections */

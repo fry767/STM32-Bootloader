@@ -186,6 +186,40 @@ uint8_t test_WriteLargerThanAvailableFiles(void)
 
 
 }
+uint8_t test_WriteFirmware(void)
+{
+	uint32_t Number_Of_Write = 20000/4;
+	uint32_t Actual_Number_Of_Write = 0;
+	uint32_t Received_Value = 0;
+	uint16_t i = 0;
+
+	if(!Bootloader_Init())
+	{
+		char ch[] = "test_WriteReceivedDataInFlash Failed\n\r";
+		Send_Char(ch,sizeof(ch));
+		return 0;
+	}
+	if(!Bootloader_EraseApp())
+	{
+		char ch[] = "test_WriteReceivedDataInFlash Failed\n\r";
+		Send_Char(ch,sizeof(ch));
+		return 0;
+	}
+	char ch[] = "Bootloader initialized for test_WriteFirmware \n\r";
+	Send_Char(ch,sizeof(ch));
+
+	for(i = 0;i < Number_Of_Write; i++)
+	{
+		if(Receive_Char_In_IT_Mode((uint8_t*)&Received_Value,4) == 4)
+		{
+			Bootloader_WriteApp32(Received_Value);
+			Actual_Number_Of_Write++;
+		}
+		else
+			break;
+	}
+	Bootloader_JumpToApplication();
+}
 uint8_t test_CommunicationParameterInit(void)
 {
 	Comm_Parameter_Struct testComParam;
@@ -266,9 +300,9 @@ void runAllCommTest(void)
 	/*test_WriteReceivedDataInFlash();
 	test_MultipleWriteReceivedDataInFlash();
 	test_WriteLargerThanAvailableFiles();*/
-
+	test_WriteFirmware();
 	/*Protocol Test*/
 	/*test_CommunicationParameterInit();
-	test_CommunicationPollForFirmware();*/
-	test_CommunicationSecurityCalculation();
+	test_CommunicationPollForFirmware();
+	test_CommunicationSecurityCalculation();*/
 }
