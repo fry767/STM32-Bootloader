@@ -13,6 +13,7 @@ uint32_t Bootloader_WriteStorage32(uint32_t value);
 uint32_t Bootloader_WriteApp32(uint32_t value);
 uint8_t Bootloader_EraseApp(void);
 uint8_t Bootloader_CopyStorageInAppspace(void);
+uint8_t Bootloader_ManualWrite(uint32_t value,uint32_t* Address);
 uint8_t Bootloader_Init(void);
 
 #ifdef __cplusplus

@@ -3,7 +3,7 @@
 #include "Bootloader_Settings.h"
 
 #define FLASH_SIZE FLASH_SIZE_DATA_REGISTER
-#define ADDRESS_IS_OUTSIDE_STORAGE_AREA(Address,LowerLimit,UpperLimit) (Address > UpperLimit-1 || Address < LowerLimit)?1:0
+#define ADDRESS_IS_OUTSIDE_AREA(Address,LowerLimit,UpperLimit) (Address > UpperLimit-1 || Address < LowerLimit)?1:0
 
 
 static uint32_t storage_address[2] ;
@@ -15,7 +15,7 @@ static uint32_t Bootloader_Read(uint32_t Address)
 {
 	if(!IS_FLASH_PROGRAM_ADDRESS(Address))
 		return 0;
-	if(ADDRESS_IS_OUTSIDE_STORAGE_AREA(Address,app_address[0],storage_address[1]))
+	if(ADDRESS_IS_OUTSIDE_AREA(Address,app_address[0],storage_address[1]))
 	{
 		return 0;
 	}else
@@ -57,7 +57,7 @@ static uint8_t Bootloader_Erase(FLASH_EraseInitTypeDef* EraseStruct)
 }
 static uint8_t Bootloader_WriteStorage(uint32_t value)
 {
-	if(ADDRESS_IS_OUTSIDE_STORAGE_AREA(Current_Store_Address,storage_address[0],storage_address[1]))
+	if(ADDRESS_IS_OUTSIDE_AREA(Current_Store_Address,storage_address[0],storage_address[1]))
 	{
 		return 0;
 	}else
@@ -71,7 +71,7 @@ static uint8_t Bootloader_WriteStorage(uint32_t value)
 }
 static uint8_t Bootloader_WriteApp(uint32_t value)
 {
-	if(ADDRESS_IS_OUTSIDE_STORAGE_AREA(Current_App_Address,app_address[0],app_address[1]))
+	if(ADDRESS_IS_OUTSIDE_AREA(Current_App_Address,app_address[0],app_address[1]))
 		{
 			return 0;
 		}else
@@ -147,6 +147,21 @@ uint32_t Bootloader_WriteApp32(uint32_t value)
 			return Bootloader_Read(Current_App_Address-4);
 		else
 			return 0;
+}
+/* Use with caution. I only protect you from writing in the bootloader space and to access memory outside
+ * the flash area*/
+uint8_t Bootloader_ManualWrite(uint32_t value,uint32_t* Address)
+{
+	if(ADDRESS_IS_OUTSIDE_AREA(*Address,app_address[0],storage_address[1]))
+	{
+		return 0;
+	}else
+	{
+		if(Bootloader_Write(value,Address))
+			return 1;
+		else
+			return 0;
+	}
 }
 uint8_t Bootloader_CopyStorageInAppspace(void)
 {

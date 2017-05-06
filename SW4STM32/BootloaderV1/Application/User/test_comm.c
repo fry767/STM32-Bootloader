@@ -299,8 +299,9 @@ void runAllCommTest(void)
 	/* Receive and Write in Flash Test */
 	/*test_WriteReceivedDataInFlash();
 	test_MultipleWriteReceivedDataInFlash();
-	test_WriteLargerThanAvailableFiles();*/
-	test_WriteFirmware();
+	test_WriteLargerThanAvailableFiles();
+	test_WriteFirmware();*/
+
 	/*Protocol Test*/
 	/*test_CommunicationParameterInit();
 	test_CommunicationPollForFirmware();
