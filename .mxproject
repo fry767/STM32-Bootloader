@@ -1,7 +1,7 @@
 [PreviousGenFiles]
-HeaderPath=H:/Documents/New Folder/BootloaderV1/Inc
+HeaderPath=C:/Users/mica7/OneDrive/Documents/Project/STM32-Bootloader/Inc
 HeaderFiles=stm32f1xx_it.h;stm32f1xx_hal_conf.h;main.h;gpio.h;can.h;i2c.h;spi.h;usart.h;tim.h;dma.h;crc.h;
-SourcePath=H:/Documents/New Folder/BootloaderV1/Src
+SourcePath=C:/Users/mica7/OneDrive/Documents/Project/STM32-Bootloader/Src
 SourceFiles=stm32f1xx_it.h;stm32f1xx_hal_conf.h;main.h;stm32f1xx_it.c;stm32f1xx_hal_msp.c;main.c;gpio.h;can.h;i2c.h;spi.h;usart.h;gpio.c;can.c;i2c.c;spi.c;usart.c;tim.h;tim.c;dma.h;dma.c;crc.h;crc.c;
 
 [PreviousLibFiles]

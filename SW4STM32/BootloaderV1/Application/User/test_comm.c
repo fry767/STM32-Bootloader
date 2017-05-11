@@ -186,6 +186,8 @@ uint8_t test_WriteLargerThanAvailableFiles(void)
 
 
 }
+/*This test cannot verify on his own. This test write a reveive firmware in
+the app space and jump to it*/
 uint8_t test_WriteFirmware(void)
 {
 	uint32_t Number_Of_Write = 20000/4;
