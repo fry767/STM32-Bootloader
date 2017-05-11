@@ -11,6 +11,13 @@ static uint32_t app_address[2];
 static uint32_t Current_Store_Address;
 static uint32_t Current_App_Address;
 
+/**
+  * @brief  Read the value of the flash at the given address.
+  * @note 	I've add some protection to not let you read not readable address.
+  * 		This resulted in infinite loop.
+  * @param  Address : Address where you want to read a value
+  * @retval Value read at the given address
+  */
 static uint32_t Bootloader_Read(uint32_t Address)
 {
 	if(!IS_FLASH_PROGRAM_ADDRESS(Address))
@@ -23,6 +30,18 @@ static uint32_t Bootloader_Read(uint32_t Address)
 		return (*((uint32_t*)Address));
 	}
 }
+/**
+  * @brief Write a given value at a given address that will increment by word for
+  * 	   the next write
+  * @note There is no protection in this method. I've write other function
+  * that take this one and these one have protection.
+  * @param  Value : value to write in flash in 32 bits
+  * @param  Address : pointer to the address that you want to write in flash
+  * @note I'm taking the pointer here because i will update the address
+  * value for the next write
+  * @retval 1 if the write is successful
+  * 		0 if the write failed
+  */
 static uint8_t Bootloader_Write(uint32_t value, uint32_t* Address)
 {
 	uint32_t value_to_flash = value & 0xFFFFFFFF;
@@ -40,6 +59,14 @@ static uint8_t Bootloader_Write(uint32_t value, uint32_t* Address)
 	}
 	return 0;
 }
+/**
+  * @brief  Erase the flash depending on the settings of the struct
+  * @param  EraseStruct : pointer to an FLASH_EraseInitTypeDef structure that
+  *         contains the configuration information for the erasing.
+
+  * @retval 1 Erase Successful
+  * 		0 Erase Failed
+  */
 static uint8_t Bootloader_Erase(FLASH_EraseInitTypeDef* EraseStruct)
 {
 	uint32_t SectorError = 0;
@@ -55,6 +82,16 @@ static uint8_t Bootloader_Erase(FLASH_EraseInitTypeDef* EraseStruct)
 	HAL_FLASH_Lock();
 	return 1;
 }
+/**
+  * @brief  Write a value in the storage area.
+  * @note 	If you use this method, you dont need to manage the address
+  * 		the drivers will increment the address by itself. You only need to
+  * 		give the actual received firmware
+  * @param  Value : Value to write
+
+  * @retval 1 Write Successful
+  * 		0 Write Failed
+  */
 static uint8_t Bootloader_WriteStorage(uint32_t value)
 {
 	if(ADDRESS_IS_OUTSIDE_STORAGE_AREA(Current_Store_Address,storage_address[0],storage_address[1]))
