@@ -106,6 +106,15 @@ static uint8_t Bootloader_WriteStorage(uint32_t value)
 	}
 	return 0;
 }
+/**
+  * @brief  Write a value in the App area.
+  * @note 	If you use this method, you dont need to manage the address
+  * 		the drivers will increment the address by itself. You only need to
+  * 		give the actual received firmware
+  * @param  Value : Value to write
+  * @retval 1 Write Successful
+  * 		0 Write Failed
+  */
 static uint8_t Bootloader_WriteApp(uint32_t value)
 {
 	if(ADDRESS_IS_OUTSIDE_STORAGE_AREA(Current_App_Address,app_address[0],app_address[1]))
@@ -120,6 +129,16 @@ static uint8_t Bootloader_WriteApp(uint32_t value)
 		}
 		return 0;
 }
+/**
+  * @brief  Erase the area that will contains the application
+  * @note You must have init the bootloader prior to this method because we need
+  * the size of the different part to erase the app
+  * @param  none
+
+  * @retval 1 : Erase successful
+  * 		0 : Erase failed
+  *
+  */
 uint8_t Bootloader_EraseApp(void)
 {
 	FLASH_EraseInitTypeDef EraseInitStruct;
@@ -132,6 +151,16 @@ uint8_t Bootloader_EraseApp(void)
 		return 0;
 	return 1;
 }
+/**
+  * @brief  Erase the area where we store the application
+  * @note You must have init the bootloader prior to this method because we need
+  * the size of the different part to erase the storage space
+  * @param  none
+
+  * @retval 1 : Erase successful
+  * 		0 : Erase failed
+  *
+  */
 uint8_t Bootloader_EraseStorage(void)
 {
 	FLASH_EraseInitTypeDef EraseInitStruct;
@@ -145,6 +174,16 @@ uint8_t Bootloader_EraseStorage(void)
 		return 1;
 
 }
+/**
+  * @brief  Initialise the bootloader
+  * @note   This method will only work on STM32 platform with the
+  * 		FLASH_DATA_SIZE_REGISTER.
+  * @param  none
+
+  * @retval 1 : Erase successful
+  * 		0 : Erase failed
+  *
+  */
 uint8_t Bootloader_Init(void)
 {
 	uint16_t flash_size_data = (*((uint16_t *)FLASH_SIZE));
@@ -164,6 +203,14 @@ uint8_t Bootloader_Init(void)
 		return 0;
 	return 1;
 }
+/**
+  * @brief  Write an 8 bit in the storage area
+  * @param  none
+
+  * @retval The read value at the given write address
+  *
+  *
+  */
 uint32_t Bootloader_WriteStorage8(uint8_t value)
 {
 	if(Bootloader_WriteStorage((uint32_t)value))
@@ -171,6 +218,14 @@ uint32_t Bootloader_WriteStorage8(uint8_t value)
 	else
 		return 0;
 }
+/**
+  * @brief  Write a 32 bit in the storage area
+  * @param  none
+
+  * @retval The read value at the given write address
+  *
+  *
+  */
 uint32_t Bootloader_WriteStorage32(uint32_t value)
 {
 	if(Bootloader_WriteStorage(value))
@@ -178,6 +233,14 @@ uint32_t Bootloader_WriteStorage32(uint32_t value)
 		else
 			return 0;
 }
+/**
+  * @brief  Write an 32 bit in the app area
+  * @param  none
+
+  * @retval The read value at the given write address
+  *
+  *
+  */
 uint32_t Bootloader_WriteApp32(uint32_t value)
 {
 	if(Bootloader_WriteApp(value))
@@ -185,6 +248,14 @@ uint32_t Bootloader_WriteApp32(uint32_t value)
 		else
 			return 0;
 }
+/**
+  * @brief  Copy the app store in the storage area in the app area for
+  * 		further jumping.
+  * @param none
+  * @retval 1 : Copy Successful
+  * 		0 : Copy Failed
+  *
+  */
 uint8_t Bootloader_CopyStorageInAppspace(void)
 {
 	uint32_t i = 0;
