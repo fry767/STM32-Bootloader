@@ -126,9 +126,7 @@ int main(void)
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
-	  char ch[] = "HELLO FROM APP";
-	  Send_Char(ch,sizeof(ch));
-	  HAL_Delay(500);
+
   }
   /* USER CODE END 3 */
 
