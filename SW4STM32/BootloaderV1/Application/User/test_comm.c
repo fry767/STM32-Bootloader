@@ -247,7 +247,7 @@ uint8_t test_CommunicationPollForFirmware(void)
 	Comm_Parameter_Struct testComParam;
 	Comm_ParameterInitialise(&testComParam,"MDKEY");
 
-	if(Comm_Poll_For_Firmware())
+	if(Comm_Poll_For_Firmware_Key())
 	{
 		char ch[] = "test_CommPollForFirmware Pass\n\r";
 		Send_Char(ch,sizeof(ch));
@@ -283,6 +283,57 @@ uint8_t test_CommunicationSecurityCalculation(void)
 		return 0;
 	}
 }
+uint8_t test_CommunicationGetFirmwareInfo(void)
+{
+	Comm_Parameter_Struct testComParam;
+	Comm_ParameterInitialise(&testComParam,"MDKEY");
+
+	Communication_Poll_For_Firmware_Info();
+
+	if(testComParam.BootKey == "MDKEY" &&
+			testComParam.FirmwareLength == 17516 &&
+			testComParam.PacketCRC == 0x0000)
+	{
+		char ch[] = "test_CommunicationGetFirmwareInfo Pass\n\r";
+		Send_Char(ch,sizeof(ch));
+		return 1;
+	}
+	else
+	{
+		char ch[] = "test_CommunicationGetFirmwareInfo Failed\n\r";
+		Send_Char(ch,sizeof(ch));
+		return 0;
+	}
+}
+uint8_t test_CommunicationGetFirmwareAndChecksum(void)
+{
+	Comm_Parameter_Struct testComParam;
+	Comm_ParameterInitialise(&testComParam,"MDKEY");
+
+	Bootloader_Init();
+	Bootloader_EraseStorage();
+	char ch[] = "BootloaderInitialise";
+	Send_Char(ch,sizeof(ch));
+	Communication_Poll_For_Firmware_Info();
+	if(testComParam.BootKey == "MDKEY")
+	{
+		Communication_Receive_Firmware_And_Store();
+	}
+	uint8_t checksum = Communication_Receive_Checksum();
+	if(checksum == Calculate_Checksum_From_Storage())
+	{
+		char ch[] = "test_CommunicationGetFirmwareAndChecksum Pass\n\r";
+		Send_Char(ch,sizeof(ch));
+		return 1;
+	}
+	else
+	{
+		char ch[] = "test_CommunicationGetFirmwareAndChecksum Failed\n\r";
+		Send_Char(ch,sizeof(ch));
+		return 0;
+	}
+
+}
 void runAllCommTest(void)
 {
 	char ch[] = "Starting Com Test\n\r";
@@ -306,4 +357,6 @@ void runAllCommTest(void)
 	/*test_CommunicationParameterInit();
 	test_CommunicationPollForFirmware();
 	test_CommunicationSecurityCalculation();*/
+	//test_CommunicationGetFirmwareInfo();
+	test_CommunicationGetFirmwareAndChecksum();
 }
