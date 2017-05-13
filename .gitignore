@@ -55,8 +55,8 @@ dkms.conf
 *.list
 *.mk
 *.bin
-
 *.xml
 
+*.orig
 .SW4STM32/BootloaderV1/Debug
 .SW4STM32/BootloaderV1/Release
