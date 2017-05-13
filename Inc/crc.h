@@ -4,6 +4,14 @@
   * Description        : This file provides code for the configuration
   *                      of the CRC instances.
   ******************************************************************************
+<<<<<<< HEAD
+=======
+  ** This notice applies to any and all portions of this file
+  * that are not between comment pairs USER CODE BEGIN and
+  * USER CODE END. Other portions of this file, whether 
+  * inserted by the user or by software development tools
+  * are owned by their respective copyright owners.
+>>>>>>> d5360eef85482471922c86c17e168608071935b1
   *
   * COPYRIGHT(c) 2017 STMicroelectronics
   *
@@ -52,7 +60,11 @@ extern CRC_HandleTypeDef hcrc;
 
 /* USER CODE END Private defines */
 
+<<<<<<< HEAD
 extern void Error_Handler(void);
+=======
+extern void _Error_Handler(char *, int);
+>>>>>>> d5360eef85482471922c86c17e168608071935b1
 
 void MX_CRC_Init(void);
 

@@ -18,6 +18,15 @@ static char mode[4];
 
 typedef void (*pFunction)(void);
 pFunction Jump_To_Application;
+
+/**
+  * @brief This method split the flash in 3 part depending on the DEFINE of
+  * the bootloader size.
+  * @param  Size : The total size of the flash in Kb (Ex: 32,64,128,256)
+  * @param  Splitted_Part : pointer to a table that will receive the length of
+  * 		the 3 parts
+  * @retval None
+  */
 void Bootloader_SplitFlash(uint16_t size, uint16_t *splitted_part)
 {
 	uint16_t remaining_size = size - BOOTLOADER_SIZE;
@@ -28,6 +37,14 @@ void Bootloader_SplitFlash(uint16_t size, uint16_t *splitted_part)
 	splitted_part[1] = ApplicationSize; 
 	splitted_part[2] = StorageSize;
 }
+/**
+  * @brief This method gives the start and end address of the storage area
+  * 		depending on the size of the flash
+  * @param  Size : The total size of the flash in Kb (Ex: 32,64,128,256)
+  * @param  erase_address : pointer to a table that will receive the length of
+  * 		the 2 address(start and end)
+  * @retval None
+  */
 void Bootloader_CalculateSectorForStorage(uint16_t size,uint32_t* erase_address)
 {
 	uint16_t table[3];
@@ -35,6 +52,14 @@ void Bootloader_CalculateSectorForStorage(uint16_t size,uint32_t* erase_address)
 	erase_address[0] = START_FLASH_ADDRESS + (uint32_t)BootloaderSize*FLASH_PAGE_SIZE + (uint32_t)ApplicationSize*FLASH_PAGE_SIZE;
 	erase_address[1] = erase_address[0] + (uint32_t)StorageSize*FLASH_PAGE_SIZE;
 }
+/**
+  * @brief This method gives the start and end address of the app area
+  * 		depending on the size of the flash
+  * @param  Size : The total size of the flash in Kb (Ex: 32,64,128,256)
+  * @param  app_address : pointer to a table that will receive the length of
+  * 		the 2 address(start and end)
+  * @retval None
+  */
 void Bootloader_CalculateSectorForApp(uint16_t size,uint32_t* app_address)
 {
 	uint16_t table[3];
@@ -42,6 +67,11 @@ void Bootloader_CalculateSectorForApp(uint16_t size,uint32_t* app_address)
 	app_address[0] = START_FLASH_ADDRESS + (uint32_t)BootloaderSize*FLASH_PAGE_SIZE;
 	app_address[1] = START_FLASH_ADDRESS + (uint32_t)BootloaderSize*FLASH_PAGE_SIZE + (uint32_t)ApplicationSize*FLASH_PAGE_SIZE;
 }
+/**
+  * @brief This method is use to jump to the application written in the app area
+  * @param  None
+  * @retval None
+  */
 void Bootloader_JumpToApplication(void)
 {
 	uint32_t Application_Address = START_FLASH_ADDRESS + (uint32_t)BootloaderSize*FLASH_PAGE_SIZE;
