@@ -11,7 +11,7 @@ static uint32_t app_address[2];
 static uint32_t Current_Store_Address;
 static uint32_t Current_App_Address;
 
-static uint32_t Bootloader_Read(uint32_t Address)
+uint32_t Bootloader_Read(uint32_t Address)
 {
 	if(!IS_FLASH_PROGRAM_ADDRESS(Address))
 		return 0;
@@ -185,5 +185,13 @@ uint8_t Bootloader_CopyStorageInAppspace(void)
 		return 1;
 
 	return 0;
+}
+uint32_t* Bootloader_GetStorageAddress(void)
+{
+	return storage_address;
+}
+uint32_t* Bootloader_GetAppAddress(void)
+{
+	return app_address;
 }
 
