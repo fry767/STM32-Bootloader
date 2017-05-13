@@ -11,9 +11,6 @@ static uint32_t app_address[2];
 static uint32_t Current_Store_Address;
 static uint32_t Current_App_Address;
 
-<<<<<<< HEAD
-uint32_t Bootloader_Read(uint32_t Address)
-=======
 /**
   * @brief  Read the value of the flash at the given address.
   * @note 	I've add some protection to not let you read not readable address.
@@ -21,8 +18,7 @@ uint32_t Bootloader_Read(uint32_t Address)
   * @param  Address : Address where you want to read a value
   * @retval Value read at the given address
   */
-static uint32_t Bootloader_Read(uint32_t Address)
->>>>>>> d5360eef85482471922c86c17e168608071935b1
+uint32_t Bootloader_Read(uint32_t Address)
 {
 	if(!IS_FLASH_PROGRAM_ADDRESS(Address))
 		return 0;
@@ -252,7 +248,7 @@ uint32_t Bootloader_WriteApp32(uint32_t value)
 		else
 			return 0;
 }
-<<<<<<< HEAD
+
 /* Use with caution. I only protect you from writing in the bootloader space and to access memory outside
  * the flash area*/
 uint8_t Bootloader_ManualWrite(uint32_t value,uint32_t* Address)
@@ -268,7 +264,7 @@ uint8_t Bootloader_ManualWrite(uint32_t value,uint32_t* Address)
 			return 0;
 	}
 }
-=======
+
 /**
   * @brief  Copy the app store in the storage area in the app area for
   * 		further jumping.
@@ -277,7 +273,7 @@ uint8_t Bootloader_ManualWrite(uint32_t value,uint32_t* Address)
   * 		0 : Copy Failed
   *
   */
->>>>>>> d5360eef85482471922c86c17e168608071935b1
+
 uint8_t Bootloader_CopyStorageInAppspace(void)
 {
 	uint32_t i = 0;

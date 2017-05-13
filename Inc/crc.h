@@ -60,11 +60,10 @@ extern CRC_HandleTypeDef hcrc;
 
 /* USER CODE END Private defines */
 
-<<<<<<< HEAD
-extern void Error_Handler(void);
-=======
+
+
 extern void _Error_Handler(char *, int);
->>>>>>> d5360eef85482471922c86c17e168608071935b1
+
 
 void MX_CRC_Init(void);
 

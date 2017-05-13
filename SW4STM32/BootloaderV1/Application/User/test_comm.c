@@ -342,7 +342,7 @@ void runAllCommTest(void)
 	Send_Char(ch,sizeof(ch));
 
 	/* Reception Test*/
-	/*test_ReceptionInBlockingMode();
+	/*test_ReceptionInBlockinggit Mode();
 	test_ReceptionInNonBlockingMode();
 	test_MultipleNonBlockingModeReception();*/
 
