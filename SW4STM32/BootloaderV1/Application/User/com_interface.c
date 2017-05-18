@@ -30,6 +30,10 @@ void Send_Char(char* ch,uint8_t size)
 {
 	HAL_UART_Transmit(&huart1,ch,size,10000);
 }
+void Send_Buf8(uint8_t* buf,uint8_t size)
+{
+	HAL_UART_Transmit(&huart1,buf,size,10000);
+}
 void Receive_Char_In_Blocking_Mode(uint8_t* value,uint8_t size)
 {
 	HAL_UART_Receive(&huart1,value,size,TIMEOUT_VALUE);
