@@ -5,7 +5,7 @@
 #define FLASH_SIZE FLASH_SIZE_DATA_REGISTER
 #define ADDRESS_IS_OUTSIDE_AREA(Address,LowerLimit,UpperLimit) (Address > UpperLimit-1 || Address < LowerLimit)?1:0
 
-
+static uint32_t Bootloader_User_Space_Address;
 static uint32_t storage_address[2] ;
 static uint32_t app_address[2];
 static uint32_t Current_Store_Address;
@@ -22,7 +22,7 @@ uint32_t Bootloader_Read(uint32_t Address)
 {
 	if(!IS_FLASH_PROGRAM_ADDRESS(Address))
 		return 0;
-	if(ADDRESS_IS_OUTSIDE_AREA(Address,app_address[0],storage_address[1]))
+	if(ADDRESS_IS_OUTSIDE_AREA(Address,Bootloader_User_Space_Address,storage_address[1]))
 	{
 		return 0;
 	}else
@@ -196,6 +196,8 @@ uint8_t Bootloader_Init(void)
 	Bootloader_CalculateSectorForStorage(flash_size_data,&storage_address);
 	Bootloader_CalculateSectorForApp(flash_size_data,&app_address);
 
+	Bootloader_User_Space_Address = app_address[0] - FLASH_PAGE_SIZE;
+
 	Current_Store_Address = storage_address[0];
 	Current_App_Address = app_address[0];
 
@@ -234,7 +236,7 @@ uint32_t Bootloader_WriteStorage32(uint32_t value)
 			return 0;
 }
 /**
-  * @brief  Write an 32 bit in the app area
+  * @brief  Write a 32 bit in the app area
   * @param  none
 
   * @retval The read value at the given write address
@@ -265,6 +267,112 @@ uint8_t Bootloader_ManualWrite(uint32_t value,uint32_t* Address)
 	}
 }
 
+
+uint8_t Bootloader_EraseUserSpace(void)
+{
+	FLASH_EraseInitTypeDef EraseInitStruct;
+	EraseInitStruct.TypeErase = FLASH_TYPEERASE_PAGES;
+	EraseInitStruct.Banks = FLASH_BANK_1;
+	EraseInitStruct.PageAddress = Bootloader_User_Space_Address;
+	EraseInitStruct.NbPages = 1;
+
+	if(!Bootloader_Erase(&EraseInitStruct))
+			return 0;
+		return 1;
+}
+uint8_t Bootloader_WriteDeviceID(uint8_t DeviceID)
+{
+	uint32_t CurrentUserSpaceAddress = Bootloader_User_Space_Address;
+	if(Bootloader_Write(DeviceID,&CurrentUserSpaceAddress))
+		return 1;
+	else
+		return 0;
+}
+uint8_t Bootloader_GetDeviceID(void)
+{
+	return (*((uint8_t *)Bootloader_User_Space_Address));
+}
+uint8_t Bootloader_WriteDeviceName(uint8_t* ch,uint16_t nameSize)
+{
+	uint8_t error = 1;
+	uint32_t value = 0;
+
+	if(nameSize > (FLASH_PAGE_SIZE - 4))
+			return 0;
+
+	uint32_t CurrentUserSpaceAddress = Bootloader_User_Space_Address + 4;
+
+	if(!Bootloader_Write(nameSize,&CurrentUserSpaceAddress))
+			error = 0;
+
+	for(uint16_t i = 0; i < nameSize ; i+=4)
+	{
+		if((nameSize - i) >= 4)
+			value = ((ch[i]<<24)&0xFF000000)|((ch[i+1]<<16)&0x00FF0000)|((ch[i+2]<<8)&0x0000FF00)|((ch[i+3])&0x000000FF);
+		else
+		{
+			switch(nameSize - i)
+			{
+			case 1:
+				value = ((ch[i]<<24)&0xFF000000);
+
+				break;
+			case 2:
+				value = ((ch[i]<<24)&0xFF000000)|((ch[i+1]<<16)&0x00FF0000);
+
+				break;
+			case 3:
+				value = ((ch[i]<<24)&0xFF000000)|((ch[i+1]<<16)&0x00FF0000)|((ch[i+2]<<8)&0x0000FF00);
+
+				break;
+			default:
+				break;
+			}
+		}
+		if(!Bootloader_Write(value,&CurrentUserSpaceAddress))
+			error = 0;
+
+	}
+	return error;
+}
+void Bootloader_ReadDeviceName(uint8_t* DeviceName)
+{
+	uint32_t CurrentUserSpaceAddress = Bootloader_User_Space_Address + 4;
+	uint16_t DeviceNameSize = (*((uint16_t*)CurrentUserSpaceAddress));
+
+	for(uint16_t i = 0; i < DeviceNameSize;i+=4)
+	{
+		CurrentUserSpaceAddress +=4;
+		if(DeviceNameSize - i >= 4)
+		{
+			DeviceName[i]   = ((*((uint32_t*)CurrentUserSpaceAddress)) >> 24) & 0xFF;
+			DeviceName[i+1] = ((*((uint32_t*)CurrentUserSpaceAddress)) >> 16) & 0xFF;
+			DeviceName[i+2] = ((*((uint32_t*)CurrentUserSpaceAddress)) >> 8)  & 0xFF;
+			DeviceName[i+3] = ((*((uint32_t*)CurrentUserSpaceAddress)))       & 0xFF;
+		}
+		else
+		{
+			switch(DeviceNameSize - i)
+			{
+			case 1:
+				DeviceName[i]   = ((*((uint32_t*)CurrentUserSpaceAddress)) >> 24) & 0xFF;
+				break;
+			case 2:
+				DeviceName[i]   = ((*((uint32_t*)CurrentUserSpaceAddress)) >> 24) & 0xFF;
+				DeviceName[i+1] = ((*((uint32_t*)CurrentUserSpaceAddress)) >> 16) & 0xFF;
+				break;
+			case 3:
+				DeviceName[i]   = ((*((uint32_t*)CurrentUserSpaceAddress)) >> 24) & 0xFF;
+				DeviceName[i+1] = ((*((uint32_t*)CurrentUserSpaceAddress)) >> 16) & 0xFF;
+				DeviceName[i+2] = ((*((uint32_t*)CurrentUserSpaceAddress)) >> 8)  & 0xFF;
+				break;
+			default:
+				break;
+			}
+		}
+
+	}
+}
 /**
   * @brief  Copy the app store in the storage area in the app area for
   * 		further jumping.
@@ -273,7 +381,6 @@ uint8_t Bootloader_ManualWrite(uint32_t value,uint32_t* Address)
   * 		0 : Copy Failed
   *
   */
-
 uint8_t Bootloader_CopyStorageInAppspace(void)
 {
 	uint32_t i = 0;
@@ -304,5 +411,9 @@ uint32_t* Bootloader_GetStorageAddress(void)
 uint32_t* Bootloader_GetAppAddress(void)
 {
 	return app_address;
+}
+uint16_t Bootloader_GetFlashSize(void)
+{
+	return (*((uint16_t *)FLASH_SIZE));
 }
 
