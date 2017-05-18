@@ -5,6 +5,7 @@
 
 static uint8_t Comm_State;
 static Comm_Parameter_Struct* CommunicationParameter;
+static Comm_Message_Struct* ApplicationMessage;
 static uint32_t Crc_Value;
 
 void Comm_ParameterInitialise(Comm_Parameter_Struct* ParamStruct,char* Wanted_Key)
@@ -14,6 +15,15 @@ void Comm_ParameterInitialise(Comm_Parameter_Struct* ParamStruct,char* Wanted_Ke
 	CommunicationParameter->FirmwareLength = 0;
 	CommunicationParameter->PacketCRC = 0;
 	Crc_Value = 0;
+}
+void Communication_InitialiseMessage(Comm_Message_Struct *MessageStruct)
+{
+	ApplicationMessage = MessageStruct;
+	ApplicationMessage->msg_header1 = 0;
+	ApplicationMessage->msg_header2 = 0;
+	ApplicationMessage->msg_cmd = 0;
+	ApplicationMessage->msg_length = 0;
+	ApplicationMessage->msg_checksum = 0;
 }
 char* Get_Communication_Key(void)
 {
@@ -93,3 +103,71 @@ uint8_t Calculate_Checksum_From_Storage(void)
 	}
 	return CommunicationSecurityCalc();
 }
+uint8_t Communication_ReceiveIncommingPacket()
+{
+	Comm_Message_Struct msg_to_send = {0};
+	uint16_t flash_size = 0;
+	uint8_t deviceID = Bootloader_GetDeviceID();
+	/* Receive the header of the message*/
+	if(!COMMUNICATION_RECEIVE_FUNCTION(ApplicationMessage,4))
+		return 0;
+	if(ApplicationMessage->msg_header1 != 0x04 && ApplicationMessage->msg_header2 != 0x7C)
+	{
+		return 0;
+	}
+	uint8_t buffer[ApplicationMessage->msg_length];
+	/* Receive the buffer for the command*/
+	COMMUNICATION_RECEIVE_FUNCTION(buffer,ApplicationMessage->msg_length);
+
+	/*Receive Checksum*/
+	ApplicationMessage->msg_checksum = Communication_Receive_Checksum();
+
+	switch(ApplicationMessage->msg_cmd)
+	{
+		case 0x00:
+			msg_to_send.msg_header1 = 0x04;
+			msg_to_send.msg_header2 = 0x7C;
+			msg_to_send.msg_cmd = 0x01;
+			msg_to_send.msg_length = 3;
+			flash_size = Bootloader_GetFlashSize();
+			COMMUNICATION_SEND_FUNCTION((uint8_t*)&msg_to_send,4);
+			COMMUNICATION_SEND_FUNCTION(&deviceID,1);
+			COMMUNICATION_SEND_FUNCTION((uint8_t*)&flash_size,2);
+			CommunicationSecurityAdd((uint8_t*)&flash_size,2);
+			CommunicationSecurityAdd((uint8_t*)&msg_to_send,4);
+			msg_to_send.msg_checksum = CommunicationSecurityCalc();
+			COMMUNICATION_SEND_FUNCTION(&msg_to_send.msg_checksum,1);
+			break;
+		case 0x10:
+			msg_to_send.msg_header1 = 0x04;
+			msg_to_send.msg_header2 = 0x7C;
+			msg_to_send.msg_cmd = 0x11;
+			msg_to_send.msg_length = ApplicationMessage->msg_length + 1;
+			Bootloader_WriteDeviceName(buffer,ApplicationMessage->msg_length);
+			COMMUNICATION_SEND_FUNCTION((uint8_t*)&msg_to_send,4);
+			COMMUNICATION_SEND_FUNCTION(&deviceID,1);
+			Bootloader_ReadDeviceName(buffer);
+			COMMUNICATION_SEND_FUNCTION(buffer,ApplicationMessage->msg_length);
+			CommunicationSecurityAdd((uint8_t*)&msg_to_send,4);
+			CommunicationSecurityAdd(&deviceID,1);
+			CommunicationSecurityAdd(buffer,ApplicationMessage->msg_length);
+			msg_to_send.msg_checksum = CommunicationSecurityCalc();
+			COMMUNICATION_SEND_FUNCTION(&msg_to_send.msg_checksum,1);
+			break;
+		case 0x20:
+			break;
+		case 0x30:
+			break;
+		case 0x40:
+			break;
+		case 0x50:
+			break;
+		case 0x60:
+			break;
+		case 0x70:
+			break;
+		default:
+			break;
+	}
+}
+
