@@ -336,6 +336,24 @@ uint8_t test_CommunicationGetFirmwareAndChecksum(void)
 	}
 
 }
+uint8_t test_CommunicationGetDeviceName(void)
+{
+	Comm_Parameter_Struct testComParam;
+	Comm_ParameterInitialise(&testComParam,"MDKEY");
+
+	Comm_Message_Struct msg;
+	Communication_InitialiseMessage(&msg);
+
+	Bootloader_Init();
+	Bootloader_EraseUserSpace();
+	Bootloader_WriteDeviceID(0);
+	char ch[] = "Bootloader Initialise and User space ready \n\r";
+	Send_Char(ch,sizeof(ch));
+
+	Communication_ReceiveIncommingPacket();
+
+
+}
 void runAllCommTest(void)
 {
 	char ch[] = "Starting Com Test\n\r";
@@ -360,5 +378,6 @@ void runAllCommTest(void)
 	test_CommunicationPollForFirmware();
 	test_CommunicationSecurityCalculation();*/
 	//test_CommunicationGetFirmwareInfo();
-	test_CommunicationGetFirmwareAndChecksum();
+	//test_CommunicationGetFirmwareAndChecksum();
+	test_CommunicationGetDeviceName();
 }
